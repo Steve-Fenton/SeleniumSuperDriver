@@ -1,6 +1,14 @@
 # SeleniumSuperDriver
 A WebDriver that distributes commands to multiple drivers in parallel.
 
+NuGet
+===
+
+You can install SuperDriver using NuGet
+
+```
+PM> Install-Package Fenton.Selenium.SuperDriver 
+```
 
 Creating a SuperWebDriver
 ===
