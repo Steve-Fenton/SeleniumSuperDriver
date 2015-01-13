@@ -47,6 +47,7 @@ The ```SuperWebDriver``` can be used just like any other ```IWebDriver```. It ha
 Everything with an interface has a partner Super object:
 
 | Interface      | Substitute         |
+|----------------|--------------------|
 | IWebDriver     | SuperWebDriver     |
 | ICookieJar     | SuperCookieJar     |
 | INavigation    | SuperNavigation    |
