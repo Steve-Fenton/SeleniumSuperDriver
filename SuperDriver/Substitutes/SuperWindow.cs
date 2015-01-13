@@ -23,9 +23,8 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                // Special Note.
-                // We may substitute a SuperPoint in the future.
-                // For now, we will provide the first position.
+                // Special Note
+                // Point is a sealed class. Send back the first one.
                 return _windows.First().Position;
             }
             set
@@ -38,9 +37,8 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                // Special Note.
-                // We may substitute a SuperSize in the future.
-                // For now, we will provide the first size.
+                // Special Note
+                // Size is a struct. Send back the first one.
                 return _windows.First().Size;
             }
             set

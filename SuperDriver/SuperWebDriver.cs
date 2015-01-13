@@ -39,9 +39,8 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                // Special Note.
-                // Undecided on how to proceed with a "SuperString"...
-                // For now, we will provide the first window handle.
+                // Special Note
+                // Primitive type. Send back first one.
                 return _drivers.First().CurrentWindowHandle;
             }
         }
@@ -60,9 +59,8 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                // Special Note.
-                // Undecided on how to proceed with a "SuperString"...
-                // For now, we will provide the first page source.
+                // Special Note
+                // Primitive type. Send back first one.
                 return _drivers.First().PageSource;
             }
         }
@@ -101,10 +99,7 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                // Special Note.
-                // We may substitute a SuperReadOnlyCollection in the future.
-                // For now, we will provide the first collection of window handles.
-                return _drivers.First().WindowHandles;
+                return new SuperReadOnlyCollection<string>(_drivers.AsParallel().Select(d => d.WindowHandles).ToList());
             }
         }
 
@@ -115,29 +110,7 @@ namespace Fenton.Selenium.SuperDriver
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
-            IList<ReadOnlyCollection<IWebElement>> webElements = new List<ReadOnlyCollection<IWebElement>>();
-            _drivers.AsParallel().ForAll(d => webElements.Add(d.FindElements(by)));
-
-            var countDistribution = webElements.Select(c => c.Count).Distinct();
-            var countsMatch = countDistribution.Count() == 1;
-
-            if (!countsMatch)
-            {
-                throw new MismatchBetweenBrowsersException<int>(countDistribution);
-            }
-
-            IList<IWebElement> results = new List<IWebElement>();
-            for (var elementsIndex = 0; elementsIndex < countDistribution.SingleOrDefault(); elementsIndex++)
-            {
-                IList<IWebElement> elementsWithSameIndex = new List<IWebElement>();
-                for (var collectionIndex = 0; collectionIndex < webElements.Count; collectionIndex++)
-                {
-                    elementsWithSameIndex.Add(webElements[collectionIndex][elementsIndex]);
-                }
-                results.Add(new SuperWebElement(elementsWithSameIndex));
-            }
-
-            return new ReadOnlyCollection<IWebElement>(results);
+            return new SuperReadOnlyCollection<IWebElement>(_drivers.AsParallel().Select(d => d.FindElements(by)).ToList());
         }
 
         public void Dispose()

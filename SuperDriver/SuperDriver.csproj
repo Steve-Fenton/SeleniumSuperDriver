@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,11 +49,13 @@
   <ItemGroup>
     <Compile Include="General\MismatchBetweenBrowsersException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Substitutes\SuperCookie.cs" />
     <Compile Include="Substitutes\SuperCookieJar.cs" />
     <Compile Include="General\SuperException.cs" />
     <Compile Include="General\SuperExtensions.cs" />
     <Compile Include="Substitutes\SuperNavigation.cs" />
     <Compile Include="Substitutes\SuperOptions.cs" />
+    <Compile Include="Substitutes\SuperReadOnlyCollection.cs" />
     <Compile Include="Substitutes\SuperTargetLocator.cs" />
     <Compile Include="Substitutes\SuperTimeout.cs" />
     <Compile Include="SuperWebDriver.cs" />

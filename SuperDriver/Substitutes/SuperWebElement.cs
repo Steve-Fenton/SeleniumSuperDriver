@@ -33,9 +33,8 @@ namespace Fenton.Selenium.SuperDriver
         public Point Location
         {
             get {
-                // Special Note.
-                // We may substitute a SuperPoint in the future.
-                // For now, we will provide the first point.
+                // Special Note
+                // Point is a sealed class. Send back the first one.
                 return _webElements.First().Location;
             }
         }
@@ -48,9 +47,8 @@ namespace Fenton.Selenium.SuperDriver
         public Size Size
         {
             get {
-                // Special Note.
-                // We may substitute a SuperSize in the future.
-                // For now, we will provide the first size.
+                // Special Note
+                // Size is a struct. Send back the first one.
                 return _webElements.First().Size;
             }
         }
@@ -108,29 +106,7 @@ namespace Fenton.Selenium.SuperDriver
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
-            IList<ReadOnlyCollection<IWebElement>> webElements = new List<ReadOnlyCollection<IWebElement>>();
-            _webElements.AsParallel().ForAll(d => webElements.Add(d.FindElements(by)));
-
-            var countDistribution = webElements.Select(c => c.Count).Distinct();
-            var countsMatch = countDistribution.Count() == 1;
-
-            if (!countsMatch)
-            {
-                throw new MismatchBetweenBrowsersException<int>(countDistribution);
-            }
-
-            IList<IWebElement> results = new List<IWebElement>();
-            for (var elementsIndex = 0; elementsIndex < countDistribution.SingleOrDefault(); elementsIndex++)
-            {
-                IList<IWebElement> elementsWithSameIndex = new List<IWebElement>();
-                for (var collectionIndex = 0; collectionIndex < webElements.Count; collectionIndex++)
-                {
-                    elementsWithSameIndex.Add(webElements[collectionIndex][elementsIndex]);
-                }
-                results.Add(new SuperWebElement(elementsWithSameIndex));
-            }
-
-            return new ReadOnlyCollection<IWebElement>(results);
+            return new SuperReadOnlyCollection<IWebElement>(_webElements.AsParallel().Select(e => e.FindElements(by)).ToList());
         }
     }
 }

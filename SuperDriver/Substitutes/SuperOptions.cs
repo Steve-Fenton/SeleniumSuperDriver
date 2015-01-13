@@ -31,7 +31,7 @@ namespace Fenton.Selenium.SuperDriver
 
         public ITimeouts Timeouts()
         {
-            return new SuperTimeout(_options.AsParallel().Select(o => o.Timeouts()).ToList());
+            return new SuperTimeouts(_options.AsParallel().Select(o => o.Timeouts()).ToList());
         }
     }
 }
