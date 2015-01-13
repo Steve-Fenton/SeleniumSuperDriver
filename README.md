@@ -65,6 +65,13 @@ Everything with an interface has a partner Super object:
 | IWebElement    | SuperWebElement    |
 | IWindow        | SuperWindow        |
 
+The following classes have also been crowbarred out of the way using the ```new``` keyword to hide base class members.
+
+| Class                 | Substitute                 |
+|-----------------------|----------------------------|
+| Cookie                | SuperCookie                |
+| ReadOnlyCollection<T> | SuperReadOnlyCollection<T> |
+
 Ideally, you shouldn't need to create anything except the ```SuperWebDriver```. The substitutes are used to ensure that commands are distributed to all web browsers and make multiple web browsers look like a single web browser to your code.
 
 Substitution and Return Value Selection
@@ -78,6 +85,6 @@ The current rules for return value selection are:
 
 Where a simple type (such as ```string``` or ```bool```) is returned, a check is made to ensure that each browser gives the same answer. For example ```page.Title``` will return a single title, after a check has been made to ensure all browsers give the same answer.
 
-Where a concrete type is returned (such as ```Point``` or ```Size```) the answer is returned from the first browser.
+Where a return type cannot be substituted, the value from the first browser is returned. (Currently applies to ```Point`` and ```Size```).
 
 I am keen on getting feedback on these rules with a view to refining them to best work with real use cases. For example, if you are obtaining ```Size``` are you asserting that it is correct? (If so, you would only really be checking that the first browser in the collection is correct - does this behaviour need to be more sophisticated?)
