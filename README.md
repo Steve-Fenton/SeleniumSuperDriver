@@ -61,7 +61,7 @@ Everything with an interface has a partner Super object:
 | INavigation    | SuperNavigation    |
 | IOptions       | SuperOptions       |
 | ITargetLocator | SuperTargetLocator |
-| ITimeouts      | SuperTimeout       |
+| ITimeouts      | SuperTimeouts      |
 | IWebElement    | SuperWebElement    |
 | IWindow        | SuperWindow        |
 
