@@ -1,54 +1,53 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Fenton.Selenium.SuperDriver
 {
-    public class SuperReadOnlyCollection<T> : ReadOnlyCollection<T>
+    public class SuperReadOnlyCollection
     {
-        private readonly IEnumerable<ReadOnlyCollection<T>> _collections;
+        //public static ReadOnlyCollection<IWebElement> MergeCollections(IEnumerable<ReadOnlyCollection<IWebElement>> collections)
+        //{
+        //    IList<IWebElement> elements = new List<IWebElement>();
 
-        public SuperReadOnlyCollection(IEnumerable<ReadOnlyCollection<T>> collections)
-            :base(new List<T>())
-        {
-            _collections = collections;
-        }
+        //    // Make sure they all have the same number of elements
+        //    var count = collections.AsParallel().Select(c => c.Count).AssertAllMatch().First();
 
-        new public int Count
+        //    for (var i = 0; i < count; i++)
+        //    {
+        //        IList<IWebElement> elementFromEachCollection = new List<IWebElement>();
+        //        for (var j = 0; j < collections.Count(); j++) {
+        //            elementFromEachCollection.Add(collections.ElementAt(j).ElementAt(i));
+        //        }
+
+        //        elements.Add(new SuperWebElement(elementFromEachCollection));
+        //    }
+
+        //    return new ReadOnlyCollection<IWebElement>(elements);
+        //}
+
+        public static ReadOnlyCollection<T> MergeCollections<T, TSubstitute>(IEnumerable<ReadOnlyCollection<T>> collections) where TSubstitute: T
         {
-            get
+            IList<T> elements = new List<T>();
+
+            // Make sure they all have the same number of elements
+            var count = collections.AsParallel().Select(c => c.Count).AssertAllMatch().First();
+
+            for (var i = 0; i < count; i++)
             {
-                return _collections.AsParallel().Select(c => c.Count).AssertAllMatch().FirstOrDefault();
+                IList<T> elementFromEachCollection = new List<T>();
+                for (var j = 0; j < collections.Count(); j++)
+                {
+                    elementFromEachCollection.Add(collections.ElementAt(j).ElementAt(i));
+                }
+
+                var x = (TSubstitute)Activator.CreateInstance(typeof(TSubstitute), elementFromEachCollection);
+                elements.Add(x);
             }
-        }
 
-        new public T this[int index]
-        {
-            get
-            {
-                return _collections.AsParallel().Select(c => c[index]).AssertAllMatch().FirstOrDefault();
-            }
-        }
-
-        new public bool Contains(T value)
-        {
-            return _collections.AsParallel().Select(c => c.Contains(value)).AssertAllMatch().FirstOrDefault();
-        }
-
-        new public void CopyTo(T[] array, int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        new public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        new public int IndexOf(T value)
-        {
-            return _collections.AsParallel().Select(c => c.IndexOf(value)).AssertAllMatch().FirstOrDefault();
+            return new ReadOnlyCollection<T>(elements);
         }
     }
 }

@@ -99,7 +99,10 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                return new SuperReadOnlyCollection<string>(_drivers.AsParallel().Select(d => d.WindowHandles).ToList());
+                // Dreaming of!
+                //SuperReadOnlyCollection.MergeCollections<string, SuperString>(_drivers.AsParallel().Select(d => d.WindowHandles).ToList());
+
+                return _drivers.First().WindowHandles;
             }
         }
 
@@ -110,7 +113,7 @@ namespace Fenton.Selenium.SuperDriver
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
-            return new SuperReadOnlyCollection<IWebElement>(_drivers.AsParallel().Select(d => d.FindElements(by)).ToList());
+            return SuperReadOnlyCollection.MergeCollections<IWebElement, SuperWebElement>(_drivers.AsParallel().Select(d => d.FindElements(by)).ToList());
         }
 
         public void Dispose()

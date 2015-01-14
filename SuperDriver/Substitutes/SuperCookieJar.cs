@@ -18,7 +18,7 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                return new SuperReadOnlyCollection<Cookie>(_cookieJars.AsParallel().Select(j => j.AllCookies).ToList());
+                return SuperReadOnlyCollection.MergeCollections<Cookie, SuperCookie>(_cookieJars.AsParallel().Select(j => j.AllCookies).ToList());
             }
         }
 

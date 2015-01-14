@@ -106,7 +106,7 @@ namespace Fenton.Selenium.SuperDriver
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
-            return new SuperReadOnlyCollection<IWebElement>(_webElements.AsParallel().Select(e => e.FindElements(by)).ToList());
+            return SuperReadOnlyCollection.MergeCollections<IWebElement, SuperWebElement>(_webElements.AsParallel().Select(e => e.FindElements(by)).ToList());
         }
     }
 }
