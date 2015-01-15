@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Fenton.Selenium.SuperDriver
     /// </summary>
     public class SuperWebDriver : IWebDriver
     {
-        private readonly IEnumerable<IWebDriver> _drivers;
+        private readonly ParallelQuery<IWebDriver> _query;
 
         /// <summary>
         /// <code>
@@ -22,17 +23,17 @@ namespace Fenton.Selenium.SuperDriver
         /// </summary>
         public SuperWebDriver(params IWebDriver[] drivers)
         {
-            _drivers = drivers;
+            _query = drivers.ToConcurrentQuery();
         }
 
         public SuperWebDriver(IList<IWebDriver> drivers)
         {
-            _drivers = drivers;
+            _query = drivers.ToConcurrentQuery();
         }
 
         public void Close()
         {
-            _drivers.AsParallel().ForAll(d => d.Close());
+            _query.ForAll(d => d.Close());
         }
 
         public string CurrentWindowHandle
@@ -41,18 +42,18 @@ namespace Fenton.Selenium.SuperDriver
             {
                 // Special Note
                 // Primitive type. Send back first one.
-                return _drivers.First().CurrentWindowHandle;
+                return _query.First().CurrentWindowHandle;
             }
         }
 
         public IOptions Manage()
         {
-            return new SuperOptions(_drivers.AsParallel().Select(d => d.Manage()).ToList());
+            return new SuperOptions(_query.Select(d => d.Manage()));
         }
 
         public INavigation Navigate()
         {
-            return new SuperNavigation(_drivers.AsParallel().Select(d => d.Navigate()).ToList());
+            return new SuperNavigation(_query.Select(d => d.Navigate()));
         }
 
         public string PageSource
@@ -61,25 +62,25 @@ namespace Fenton.Selenium.SuperDriver
             {
                 // Special Note
                 // Primitive type. Send back first one.
-                return _drivers.First().PageSource;
+                return _query.First().PageSource;
             }
         }
 
         public void Quit()
         {
-            _drivers.AsParallel().ForAll(d => d.Quit());
+            _query.ForAll(d => d.Quit());
         }
 
         public ITargetLocator SwitchTo()
         {
-            return new SuperTargetLocator(_drivers.AsParallel().Select(d => d.SwitchTo()).ToList());
+            return new SuperTargetLocator(_query.Select(d => d.SwitchTo()));
         }
 
         public string Title
         {
             get
             {
-                return _drivers.AsParallel().Select(d => d.Title).AssertAllMatch().FirstOrDefault();
+                return _query.Select(d => d.Title).AssertAllMatch().FirstOrDefault();
             }
         }
 
@@ -87,11 +88,11 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                return _drivers.AsParallel().Select(d => d.Url).AssertAllMatch().FirstOrDefault();
+                return _query.Select(d => d.Url).AssertAllMatch().FirstOrDefault();
             }
             set
             {
-                _drivers.AsParallel().ForAll(d => d.Url = value);
+                _query.ForAll(d => d.Url = value);
             }
         }
 
@@ -100,20 +101,19 @@ namespace Fenton.Selenium.SuperDriver
             get
             {
                 // Dreaming of!
-                //SuperReadOnlyCollection.MergeCollections<string, SuperString>(_drivers.AsParallel().Select(d => d.WindowHandles).ToList());
-
-                return _drivers.First().WindowHandles;
+                //SuperReadOnlyCollection.MergeCollections<string, SuperString>(_drivers.Select(d => d.WindowHandles).ToList());
+                return _query.First().WindowHandles;
             }
         }
 
         public IWebElement FindElement(By by)
         {
-            return new SuperWebElement(_drivers.AsParallel().Select(d => d.FindElement(by)).ToList());
+            return new SuperWebElement(_query.Select(d => d.FindElement(by)));
         }
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
-            return SuperReadOnlyCollection.MergeCollections<IWebElement, SuperWebElement>(_drivers.AsParallel().Select(d => d.FindElements(by)).ToList());
+            return SuperReadOnlyCollection.MergeCollections<IWebElement, SuperWebElement>(_query.Select(d => d.FindElements(by)));
         }
 
         public void Dispose()
@@ -126,7 +126,7 @@ namespace Fenton.Selenium.SuperDriver
         {
             if (disposing)
             {
-                _drivers.AsParallel().ForAll(d => d.Dispose());
+                _query.ForAll(d => d.Dispose());
             }
         }
     }

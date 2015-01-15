@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,18 +7,18 @@ namespace Fenton.Selenium.SuperDriver
 {
     public class SuperOptions : IOptions
     {
-        private readonly IEnumerable<IOptions> _options;
+        private readonly ParallelQuery<IOptions> _query;
 
         public SuperOptions(IEnumerable<IOptions> options)
         {
-            _options = options;
+            _query = options.ToConcurrentQuery();
         }
 
         public ICookieJar Cookies
         {
             get
             {
-                return new SuperCookieJar(_options.AsParallel().Select(o => o.Cookies).ToList());
+                return new SuperCookieJar(_query.Select(o => o.Cookies));
             }
         }
 
@@ -25,13 +26,13 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                return new SuperWindow(_options.AsParallel().Select(o => o.Window).ToList());
+                return new SuperWindow(_query.Select(o => o.Window));
             }
         }
 
         public ITimeouts Timeouts()
         {
-            return new SuperTimeouts(_options.AsParallel().Select(o => o.Timeouts()).ToList());
+            return new SuperTimeouts(_query.Select(o => o.Timeouts()));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,16 +8,16 @@ namespace Fenton.Selenium.SuperDriver
 {
     public class SuperWindow : IWindow
     {
-        private readonly IEnumerable<IWindow> _windows;
+        private readonly ParallelQuery<IWindow> _query;
 
         public SuperWindow(IEnumerable<IWindow> windows)
         {
-            _windows = windows;
+            _query = windows.ToConcurrentQuery();
         }
 
         public void Maximize()
         {
-            _windows.AsParallel().ForAll(w => w.Maximize());
+            _query.ForAll(w => w.Maximize());
         }
 
         public Point Position
@@ -25,11 +26,11 @@ namespace Fenton.Selenium.SuperDriver
             {
                 // Special Note
                 // Point is a sealed class. Send back the first one.
-                return _windows.First().Position;
+                return _query.First().Position;
             }
             set
             {
-                _windows.AsParallel().ForAll(w => w.Position = value);
+                _query.ForAll(w => w.Position = value);
             }
         }
 
@@ -39,11 +40,11 @@ namespace Fenton.Selenium.SuperDriver
             {
                 // Special Note
                 // Size is a struct. Send back the first one.
-                return _windows.First().Size;
+                return _query.First().Size;
             }
             set
             {
-                _windows.AsParallel().ForAll(w => w.Size = value);
+                _query.ForAll(w => w.Size = value);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,44 +8,44 @@ namespace Fenton.Selenium.SuperDriver
 {
     public class SuperCookieJar : ICookieJar
     {
-        private readonly IEnumerable<ICookieJar> _cookieJars;
+        private readonly ParallelQuery<ICookieJar> _query;
 
         public SuperCookieJar(IEnumerable<ICookieJar> cookieJars)
         {
-            _cookieJars = cookieJars;
+            _query = cookieJars.ToConcurrentQuery();
         }
 
         public ReadOnlyCollection<Cookie> AllCookies
         {
             get
             {
-                return SuperReadOnlyCollection.MergeCollections<Cookie, SuperCookie>(_cookieJars.AsParallel().Select(j => j.AllCookies).ToList());
+                return SuperReadOnlyCollection.MergeCollections<Cookie, SuperCookie>(_query.Select(j => j.AllCookies));
             }
         }
 
         public void AddCookie(Cookie cookie)
         {
-            _cookieJars.AsParallel().ForAll(j => j.AddCookie(cookie));
+            _query.ForAll(j => j.AddCookie(cookie));
         }
 
         public void DeleteAllCookies()
         {
-            _cookieJars.AsParallel().ForAll(j => j.DeleteAllCookies());
+            _query.ForAll(j => j.DeleteAllCookies());
         }
 
         public void DeleteCookie(Cookie cookie)
         {
-            _cookieJars.AsParallel().ForAll(j => j.DeleteCookie(cookie));
+            _query.ForAll(j => j.DeleteCookie(cookie));
         }
 
         public void DeleteCookieNamed(string name)
         {
-            _cookieJars.AsParallel().ForAll(j => j.DeleteCookieNamed(name));
+            _query.ForAll(j => j.DeleteCookieNamed(name));
         }
 
         public Cookie GetCookieNamed(string name)
         {
-            return new SuperCookie(_cookieJars.AsParallel().Select(c => c.GetCookieNamed(name)).ToList());
+            return new SuperCookie(_query.Select(c => c.GetCookieNamed(name)));
         }
     }
 }

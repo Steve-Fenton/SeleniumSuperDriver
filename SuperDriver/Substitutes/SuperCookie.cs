@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,19 +8,19 @@ namespace Fenton.Selenium.SuperDriver
 {
     public class SuperCookie : Cookie
     {
-        public readonly IEnumerable<Cookie> _cookies;
+        public readonly ParallelQuery<Cookie> _query;
 
         public SuperCookie(IEnumerable<Cookie> cookies)
             : base("fake", "fake")
         {
-            _cookies = cookies;
+            _query = cookies.ToConcurrentQuery();
         }
 
         new public string Domain
         {
             get
             {
-                return _cookies.AsParallel().Select(c => c.Domain).AssertAllMatch().FirstOrDefault();
+                return _query.Select(c => c.Domain).AssertAllMatch().FirstOrDefault();
             }
         }
 
@@ -28,8 +29,8 @@ namespace Fenton.Selenium.SuperDriver
             get
             {
                 // Seems impractical to expect them all to match here actually
-                //return _cookies.AsParallel().Select(c => c.Expiry).AssertAllMatch().FirstOrDefault();
-                return _cookies.FirstOrDefault().Expiry;
+                //return _cookies.Select(c => c.Expiry).AssertAllMatch().FirstOrDefault();
+                return _query.FirstOrDefault().Expiry;
             }
         }
 
@@ -37,7 +38,7 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                return _cookies.AsParallel().Select(c => c.Name).AssertAllMatch().FirstOrDefault();
+                return _query.Select(c => c.Name).AssertAllMatch().FirstOrDefault();
             }
         }
 
@@ -45,7 +46,7 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                return _cookies.AsParallel().Select(c => c.Value).AssertAllMatch().FirstOrDefault();
+                return _query.Select(c => c.Value).AssertAllMatch().FirstOrDefault();
             }
         }
 
@@ -53,7 +54,7 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                return _cookies.AsParallel().Select(c => c.Path).AssertAllMatch().FirstOrDefault();
+                return _query.Select(c => c.Path).AssertAllMatch().FirstOrDefault();
             }
         }
 
@@ -61,7 +62,7 @@ namespace Fenton.Selenium.SuperDriver
         {
             get
             {
-                return _cookies.AsParallel().Select(c => c.Secure).AssertAllMatch().FirstOrDefault();
+                return _query.Select(c => c.Secure).AssertAllMatch().FirstOrDefault();
             }
         }
     }
