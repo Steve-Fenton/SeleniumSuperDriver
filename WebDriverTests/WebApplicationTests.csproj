@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Helpers\Browser.cs" />
     <Compile Include="Helpers\RemoteWebDriverFactory.cs" />
+    <Compile Include="PageObjectModels\PageBase.cs" />
     <Compile Include="PageObjectModels\TestFormPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringEnumExtensions.cs" />

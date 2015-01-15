@@ -1,59 +1,56 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Configuration;
 
 namespace WebApplicationTests.PageObjectModels
 {
-    public class TestFormPage : IDisposable
+    public class TestFormPage : PageBase
     {
-        private IWebDriver _driver;
-        private string _testFormUrl;
+        private Uri _testFormUri;
 
-        public TestFormPage(Browser browser)
+        [FindsBy(How = How.Id, Using = "name")]
+        public IWebElement NameElement { get; set; }
+
+        [FindsBy(How = How.Name, Using = "email")]
+        public IWebElement EmailElement { get; set; }
+
+        [FindsBy(How = How.Id, Using = "send-button")]
+        public IWebElement SendButton { get; set; }
+
+        [FindsBy(How = How.Id, Using = "content")]
+        public IWebElement ContentElement { get; set; }
+
+        public TestFormPage(IWebDriver driver) : base(driver)
         {
-            // Local run
-            _driver = LocalWebDriverFactory.GetDriver(browser);
-
-            // Remote run - see SeleniumServer.txt
-            //_driver = RemoteWebDriverFactory.GetDriver(browser);
-
-            Uri pageUri = new Uri(new Uri(ConfigurationManager.AppSettings["TestUrl"]), "index.html");
-            _testFormUrl = pageUri.AbsoluteUri;
+            _testFormUri = new Uri(new Uri(ConfigurationManager.AppSettings["TestUrl"]), "index.html");
         }
 
         public void Open()
         {
-            _driver.Navigate().GoToUrl(_testFormUrl);
+            Driver.Navigate().GoToUrl(_testFormUri.AbsoluteUri);
         }
 
         public void EnterName(string name)
         {
-            var nameElement = _driver.FindElement(By.Id("name"));
-            nameElement.SendKeys(name);
+            NameElement.Clear();
+            NameElement.SendKeys(name);
         }
 
         public void EnterEmail(string email)
         {
-            var emailElement = _driver.FindElement(By.Name("email"));
-            emailElement.SendKeys(email);
+            EmailElement.Clear();
+            EmailElement.SendKeys(email);
         }
 
         public void SubmitForm()
         {
-            var sendElement = _driver.FindElement(By.Id("send-button"));
-            sendElement.Click();
+            SendButton.Click();
         }
 
-        public bool ContentMatches(string expected)
+        public string Content()
         {
-            var contentElement = _driver.FindElement(By.Id("content"));
-            return contentElement.Text.Equals(expected);
-        }
-
-        public void Dispose()
-        {
-            _driver.Quit();
+            return ContentElement.Text;
         }
     }
 }

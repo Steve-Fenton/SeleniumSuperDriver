@@ -1,12 +1,15 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using WebApplicationTests.PageObjectModels;
 
 namespace WebApplicationTests
 {
     public class TestContext : IDisposable
     {
-        private IDisposable _currentPage;
-        public IDisposable CurrentPage
+        private PageBase _currentPage;
+        public PageBase CurrentPage
         {
             get
             {
@@ -14,28 +17,37 @@ namespace WebApplicationTests
             }
             set
             {
-                try
-                {
-                    if (_currentPage != null)
-                    {
-                        _currentPage.Dispose();
-                    }
-                }
-                finally
-                {
-                    _currentPage = value;
-                }
+
+                _currentPage = value;
             }
         }
 
-        public T GetCurrentPageAs<T>() where T : class, IDisposable
+        private IWebDriver _driver;
+        public IWebDriver Driver
+        {
+            get
+            {
+                if (_driver == null)
+                {
+                    var isLocal = bool.Parse(ConfigurationManager.AppSettings["IsLocal"]);
+                    var browser = ConfigurationManager.AppSettings["Browser"].AsEnum<Browser>();
+
+                    _driver = (isLocal) ?
+                        LocalWebDriverFactory.GetDriver(browser) :
+                        RemoteWebDriverFactory.GetDriver(browser);
+                }
+                return _driver;
+            }
+        }
+
+        public T GetCurrentPageAs<T>() where T : PageBase
         {
             return CurrentPage as T;
         }
 
         public void Dispose()
         {
-            _currentPage.Dispose();
+            _driver.Dispose();
         }
     }
 }

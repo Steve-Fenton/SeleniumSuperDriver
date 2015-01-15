@@ -3,8 +3,7 @@
 
 @SampleApplication @UI
 Scenario: Test Form
-	Given I am using the "SuperWebDriver" browser
-	And I am on the Test Form page
+	Given I am on the Test Form page
 	And I have entered the name "Steve Fenton"
 	And I have entered the email "steve@example.com"
 	When I press Send

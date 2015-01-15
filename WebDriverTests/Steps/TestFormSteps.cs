@@ -7,7 +7,6 @@ namespace WebApplicationTests
     [Binding]
     public class TestFormPageSteps
     {
-        private Browser _browser = Browser.Firefox;
         private TestContext _testContext;
 
         public TestFormPageSteps(TestContext testContext)
@@ -18,13 +17,12 @@ namespace WebApplicationTests
         [Given(@"I am using the ""([^\""]*)"" browser")]
         public void GivenIAmUsingTheBrowser(string browser)
         {
-            _browser = browser.AsEnum<Browser>();
         }
 
         [Given(@"I am on the Test Form page")]
         public void GivenIAmOnThe()
         {
-            _testContext.CurrentPage =  new TestFormPage(_browser);
+            _testContext.CurrentPage = new TestFormPage(_testContext.Driver);
             _testContext.GetCurrentPageAs<TestFormPage>().Open();
         }
 
@@ -49,7 +47,7 @@ namespace WebApplicationTests
         [Then(@"the result should be ""([^\""]*)""")]
         public void ThenTheResultShouldBe(string expected)
         {
-            Assert.IsTrue(_testContext.GetCurrentPageAs<TestFormPage>().ContentMatches(expected));
+            Assert.AreEqual(expected, _testContext.GetCurrentPageAs<TestFormPage>().Content());
         }
 
         [AfterScenario]
