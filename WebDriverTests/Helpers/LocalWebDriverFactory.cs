@@ -42,8 +42,11 @@ namespace WebApplicationTests
             IList<IWebDriver> drivers = new List<Func<IWebDriver>>
             {
                 () =>  { return GetDriver(Browser.Chrome); },
-                //() =>  { return GetDriver(Browser.Firefox); },
-                //() => { return GetDriver(Browser.InternetExplorer); },
+                () =>  { return GetDriver(Browser.Firefox); },
+                () => { return GetDriver(Browser.InternetExplorer); },
+                () =>  { return GetDriver(Browser.Chrome); },
+                () =>  { return GetDriver(Browser.Firefox); },
+                () => { return GetDriver(Browser.InternetExplorer); },
             }.AsParallel().Select(d => d()).ToList();
 
             return drivers;

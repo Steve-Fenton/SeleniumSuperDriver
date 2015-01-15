@@ -43,9 +43,6 @@ namespace WebApplicationTests.PageObjectModels
         {
             var sendElement = _driver.FindElement(By.Id("send-button"));
             sendElement.Click();
-
-            var elems = _driver.FindElements(By.CssSelector("input:invalid"));
-            Console.WriteLine("I found: " + elems.Count);
         }
 
         public bool ContentMatches(string expected)

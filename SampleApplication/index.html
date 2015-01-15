@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Sample Application</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+</head>
+<body>
+    <h1>Sample Application</h1>
+    <div id="content">
+        <form method="post" action="" id="test-form">
+            <fieldset>
+                <legend>Test Form</legend>
+                <div>
+                    <label>
+                        Name:<br />
+                        <input type="text" id="name" name="name" required />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Email:<br />
+                        <input type="email" name="email" required />
+                    </label>
+                </div>
+                <div>
+                    <button id="send-button">Send</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <script src="Scripts/require.js" data-main="app"></script>
+</body>
+</html>
