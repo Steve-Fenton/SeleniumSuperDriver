@@ -10,7 +10,17 @@ namespace WebApplicationTests
 {
     public class RemoteWebDriverFactory
     {
-        public static IWebDriver GetDriver(Browser browser)
+        internal static IWebDriver GetWebDriver(Browser browser)
+        {
+            var driver = GetDriver(browser);
+
+            // Implicit wait of up to 10 seconds
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+
+            return driver;
+        }
+
+        private static IWebDriver GetDriver(Browser browser)
         {
             IWebDriver driver = RemoteWebDriverFactory.GetCapabilityFor(browser);
             driver.Manage().Window.Maximize();
@@ -18,7 +28,7 @@ namespace WebApplicationTests
             return driver;
         }
 
-        public static IWebDriver GetCapabilityFor(Browser browser)
+        private static IWebDriver GetCapabilityFor(Browser browser)
         {
             var uri = new Uri(ConfigurationManager.AppSettings["SeleniumHubUrl"]);
             IWebDriver driver;

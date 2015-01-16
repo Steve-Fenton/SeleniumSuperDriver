@@ -67,25 +67,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\FindElements.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FindElements.feature</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\Browser.cs" />
     <Compile Include="Helpers\RemoteWebDriverFactory.cs" />
     <Compile Include="PageObjectModels\PageBase.cs" />
     <Compile Include="PageObjectModels\TestFormPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringEnumExtensions.cs" />
+    <Compile Include="Steps\DriverSingleton.cs" />
+    <Compile Include="Steps\BaseFixture.cs" />
     <Compile Include="Steps\TestContext.cs" />
     <Compile Include="Features\TestForm.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestForm.feature</DependentUpon>
     </Compile>
-    <Compile Include="Steps\TestFormStepsBasic.cs" />
+    <Compile Include="Steps\FindElementSteps.cs" />
     <Compile Include="Steps\TestFormSteps.cs" />
     <Compile Include="Helpers\LocalWebDriverFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Features\FindElements.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>FindElements.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Features\TestForm.feature">
@@ -122,15 +133,9 @@
     <IEDriverPath>$(IEDriverInstallPath)content\IEDriverServer.exe</IEDriverPath>
     <PowerShellExe Condition="'$(PowerShellExe)'==''">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>
   </PropertyGroup>
-  <Target Name="DownloadIEDriver" Label="DownloadIEDriverBuildTask">
+  <Target Name="DownloadIEDriver">
     <Exec Condition="!Exists('$(IEDriverPath)')" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -command &quot;&amp; { &amp;'$(IEDriverInitScriptPath)' '$(IEDriverInstallPath)' '$(IEDriverToolsPath)'} &quot;" />
   </Target>
-  <ItemGroup>
-    <Content Include="..\packages\WebDriver.IEDriverServer.win32.2.44\content\IEDriverServer.exe">
-      <Link>IEDriverServer.exe</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SuperDriver\SuperDriver.csproj">
       <Project>{a8067efb-83ff-47c2-910f-81b5b25741dc}</Project>
@@ -138,6 +143,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\packages\WebDriver.IEDriverServer.win32.2.44\content\IEDriverServer.exe">
+      <Link>IEDriverServer.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

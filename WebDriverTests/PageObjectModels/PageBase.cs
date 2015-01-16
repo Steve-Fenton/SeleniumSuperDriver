@@ -12,5 +12,15 @@ namespace WebApplicationTests.PageObjectModels
             Driver = driver;
             PageFactory.InitElements(Driver, this);
         }
+
+        public string Title()
+        {
+            return Driver.Title;
+        }
+
+        public string Url()
+        {
+            return Driver.Url;
+        }
     }
 }

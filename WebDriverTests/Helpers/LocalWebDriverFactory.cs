@@ -12,7 +12,17 @@ namespace WebApplicationTests
 {
     public static class LocalWebDriverFactory
     {
-        internal static IWebDriver GetDriver(Browser browser)
+        internal static IWebDriver GetWebDriver(Browser browser)
+        {
+            var driver = GetDriver(browser);
+
+            // Implicit wait of up to 10 seconds
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+
+            return driver;
+        }
+
+        private static IWebDriver GetDriver(Browser browser)
         {
             IWebDriver driver = null;
             switch (browser)
@@ -31,9 +41,6 @@ namespace WebApplicationTests
                     break;
             }
 
-            // Implicit wait of up to 10 seconds
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-
             return driver;
         }
 
@@ -42,12 +49,9 @@ namespace WebApplicationTests
             // Allow some degree of parallelism when creating drivers, which can be slow
             IList<IWebDriver> drivers = new List<Func<IWebDriver>>
             {
-                () =>  { return GetDriver(Browser.Chrome); },
-                () =>  { return GetDriver(Browser.Firefox); },
-                () => { return GetDriver(Browser.InternetExplorer); },
-                () =>  { return GetDriver(Browser.Chrome); },
-                () =>  { return GetDriver(Browser.Firefox); },
-                () => { return GetDriver(Browser.InternetExplorer); },
+                //() => { return GetDriver(Browser.Chrome); },
+                () => { return GetDriver(Browser.Firefox); },
+                //() => { return GetDriver(Browser.InternetExplorer); },
             }.AsParallel().Select(d => d()).ToList();
 
             return drivers;

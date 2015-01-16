@@ -14,16 +14,13 @@ namespace WebApplicationTests
             _testContext = testContext;
         }
 
-        [Given(@"I am using the ""([^\""]*)"" browser")]
-        public void GivenIAmUsingTheBrowser(string browser)
-        {
-        }
-
         [Given(@"I am on the Test Form page")]
         public void GivenIAmOnThe()
         {
-            _testContext.CurrentPage = new TestFormPage(_testContext.Driver);
+            _testContext.CurrentPage = new TestFormPage(DriverSingleton.Driver);
             _testContext.GetCurrentPageAs<TestFormPage>().Open();
+            Assert.AreEqual("Sample Application", _testContext.GetCurrentPageAs<TestFormPage>().Title());
+            Assert.AreEqual("http://localhost:9822/index.html", _testContext.GetCurrentPageAs<TestFormPage>().Url());
         }
 
         [Given(@"I have entered the name ""([^\""]*)""")]
@@ -48,12 +45,6 @@ namespace WebApplicationTests
         public void ThenTheResultShouldBe(string expected)
         {
             Assert.AreEqual(expected, _testContext.GetCurrentPageAs<TestFormPage>().Content());
-        }
-
-        [AfterScenario]
-        public void TearDown()
-        {
-            _testContext.Dispose();
         }
     }
 }
