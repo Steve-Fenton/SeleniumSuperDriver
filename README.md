@@ -97,12 +97,16 @@ Pre-Requisites - theses are the tools you'll need if you want to work with the s
 Software 
 
  - Visual Studio 2013 Community Edition (or better)
- - NUnit (installed)
- - OpenCover (installed)
+ - TypeScript 1.4 (used in the sample application)
+ - NUnit (the installed version)
+ - OpenCover (the installed version)
+
+The installed version of NUnit and OpenCover seems to work best when using OpenCover to track code coverage.
 
 Visual Studio Extensions
 
  - SpecFlow
+ - NUnit Test Adapted
  - OpenCover UI
 
 NuGet Packages
