@@ -25,14 +25,17 @@ namespace Fenton.Selenium.SuperDriver
             _query = drivers.ToConcurrentQuery();
         }
 
+        /// <summary>
+        /// <code>
+        /// IWebDriver driver = new SuperWebDriver(new IList<IWebDriver> {
+        ///     new ChromeDriver(), 
+        ///     new FirefoxDriver()
+        ///     });
+        /// </code>
+        /// </summary>
         public SuperWebDriver(IList<IWebDriver> drivers)
         {
             _query = drivers.ToConcurrentQuery();
-        }
-
-        public void Close()
-        {
-            _query.ForAll(d => d.Close());
         }
 
         public string CurrentWindowHandle
@@ -63,11 +66,6 @@ namespace Fenton.Selenium.SuperDriver
                 // Primitive type. Send back first one.
                 return _query.First().PageSource;
             }
-        }
-
-        public void Quit()
-        {
-            _query.ForAll(d => d.Quit());
         }
 
         public ITargetLocator SwitchTo()
@@ -113,6 +111,16 @@ namespace Fenton.Selenium.SuperDriver
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
             return SuperReadOnlyCollection.MergeCollections<IWebElement, SuperWebElement>(_query.Select(d => d.FindElements(by)));
+        }
+
+        public void Close()
+        {
+            _query.ForAll(d => d.Close());
+        }
+
+        public void Quit()
+        {
+            _query.ForAll(d => d.Quit());
         }
 
         public void Dispose()

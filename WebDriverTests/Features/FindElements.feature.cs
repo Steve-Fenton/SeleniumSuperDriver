@@ -67,6 +67,7 @@ namespace WebApplicationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Find Elements")]
+        [NUnit.Framework.CategoryAttribute("SuperDriver")]
         [NUnit.Framework.CategoryAttribute("FindElements")]
         [NUnit.Framework.TestCaseAttribute("TagName", "a", "3", null)]
         [NUnit.Framework.TestCaseAttribute("TagName", "article", "1", null)]
@@ -81,6 +82,7 @@ namespace WebApplicationTests.Features
         public virtual void FindElements(string by, string selector, string numberOfMatches, string[] exampleTags)
         {
             string[] @__tags = new string[] {
+                    "SuperDriver",
                     "FindElements"};
             if ((exampleTags != null))
             {
@@ -101,6 +103,7 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Find Element")]
+        [NUnit.Framework.CategoryAttribute("SuperDriver")]
         [NUnit.Framework.CategoryAttribute("FindElement")]
         [NUnit.Framework.TestCaseAttribute("TagName", "h2", "Test Heading", null)]
         [NUnit.Framework.TestCaseAttribute("Id", "testheading", "Test Sub A", null)]
@@ -110,6 +113,7 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void FindElement(string by, string selector, string content, string[] exampleTags)
         {
             string[] @__tags = new string[] {
+                    "SuperDriver",
                     "FindElement"};
             if ((exampleTags != null))
             {

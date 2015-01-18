@@ -6,7 +6,7 @@ namespace WebApplicationTests.Steps
     public class BaseFixture
     {
         [TestFixtureTearDown]
-        public void TearDown()
+        public static void TearDown()
         {
             DriverSingleton.Driver.Close();
             DriverSingleton.Driver.Quit();

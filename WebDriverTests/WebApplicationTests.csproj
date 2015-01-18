@@ -67,6 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\Cookie.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cookie.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\FindElements.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,6 +85,7 @@
     <Compile Include="Helpers\StringEnumExtensions.cs" />
     <Compile Include="Steps\DriverSingleton.cs" />
     <Compile Include="Steps\BaseFixture.cs" />
+    <Compile Include="Steps\CookieSteps.cs" />
     <Compile Include="Steps\TestContext.cs" />
     <Compile Include="Features\TestForm.feature.cs">
       <AutoGen>True</AutoGen>
@@ -93,6 +99,10 @@
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Features\Cookie.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Cookie.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\FindElements.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

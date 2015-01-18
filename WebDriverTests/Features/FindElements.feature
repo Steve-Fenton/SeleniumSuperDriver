@@ -3,7 +3,7 @@
 	I want to issue a find element command to a single driver
 	and have that distributed to multiple drivers
 
-@FindElements
+@SuperDriver @FindElements
 Scenario Outline: Find Elements
 	Given I am on the Test Form page
 	When I select elements "<By>" "<Selector>"
@@ -22,7 +22,7 @@ Examples:
 	| PartialLinkText | Link                                 | 3               |
 	| XPath           | /html/body/main/article/header/h2[1] | 1               |
 
-@FindElement
+@SuperDriver @FindElement
 Scenario Outline: Find Element
 	Given I am on the Test Form page
 	When I select an element "<By>" "<Selector>"

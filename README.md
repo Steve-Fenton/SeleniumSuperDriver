@@ -88,3 +88,23 @@ Where a simple type (such as ```string``` or ```bool```) is returned, a check is
 Where a return type cannot be substituted, the value from the first browser is returned. (Currently applies to ```Point``` and ```Size```).
 
 I am keen on getting feedback on these rules with a view to refining them to best work with real use cases. For example, if you are obtaining ```Size``` are you asserting that it is correct? (If so, you would only really be checking that the first browser in the collection is correct - does this behaviour need to be more sophisticated?)
+
+Contributions
+===
+
+Pre-Requisites - theses are the tools you'll need if you want to work with the source code or contribute to the project.
+
+Software 
+
+ - Visual Studio 2013 Community Edition (or better)
+ - NUnit (installed)
+ - OpenCover (installed)
+
+Visual Studio Extensions
+
+ - SpecFlow
+ - OpenCover UI
+
+NuGet Packages
+
+Just ensure "Enable NuGet Package Restore" is used on the solution and they'll all download.
