@@ -1,8 +1,7 @@
 # SeleniumSuperDriver
 A WebDriver that distributes commands to multiple drivers in parallel.
 
-NuGet
-===
+## NuGet
 
 You can install SuperDriver using NuGet
 
@@ -10,8 +9,7 @@ You can install SuperDriver using NuGet
 PM> Install-Package Fenton.Selenium.SuperDriver 
 ```
 
-Creating a SuperWebDriver
-===
+## Creating a SuperWebDriver
 
 A ```SuperWebDriver``` can run as many individual ```IWebDrivers``` as you would like (and your machine can take).
 
@@ -47,8 +45,7 @@ private static IList<IWebDriver> GetDriverSuite()
 }
 ```
 
-Using the SuperWebDriver
-===
+## Using the SuperWebDriver
 
 The ```SuperWebDriver``` can be used just like any other ```IWebDriver```. It handles all the hard work distributing commands to all of the drivers, web controls, options objects and so on.
 
@@ -74,8 +71,7 @@ The following classes have also been crowbarred out of the way using the ```new`
 
 Ideally, you shouldn't need to create anything except the ```SuperWebDriver```. The substitutes are used to ensure that commands are distributed to all web browsers and make multiple web browsers look like a single web browser to your code.
 
-Substitution and Return Value Selection
-===
+## Substitution and Return Value Selection
 
 The current rules for substitution are:
 
@@ -89,29 +85,28 @@ Where a return type cannot be substituted, the value from the first browser is r
 
 I am keen on getting feedback on these rules with a view to refining them to best work with real use cases. For example, if you are obtaining ```Size``` are you asserting that it is correct? (If so, you would only really be checking that the first browser in the collection is correct - does this behaviour need to be more sophisticated?)
 
-Contributions
-===
+## Contributions
 
 Pre-Requisites - theses are the tools you'll need if you want to work with the source code or contribute to the project.
 
-Software 
+### Software 
 
  - Visual Studio 2013 Community Edition (or better)
  - TypeScript 1.4 (used in the sample application)
 
-Software (Only needed to get code coverage if using Visual Studio Community Edition or Pro Edition)
+#### Software (Only needed to get code coverage if using Visual Studio Community Edition or Pro Edition)
 
  - NUnit (the installed version)
  - OpenCover (the installed version)
 
 The installed version of NUnit and OpenCover seems to work best when using OpenCover to track code coverage.
 
-Visual Studio Extensions
+### Visual Studio Extensions
 
  - SpecFlow
  - NUnit Test Adapted
  - OpenCover UI
 
-NuGet Packages
+### NuGet Packages
 
 Just ensure "Enable NuGet Package Restore" is used on the solution and they'll all download.
