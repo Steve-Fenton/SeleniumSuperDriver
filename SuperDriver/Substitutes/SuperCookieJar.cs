@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -35,17 +34,32 @@ namespace Fenton.Selenium.SuperDriver
 
         public void DeleteCookie(Cookie cookie)
         {
-            _query.ForAll(j => j.DeleteCookie(cookie));
+            var superCookie = cookie as SuperCookie;
+            if (superCookie != null)
+            {
+                foreach (var c in superCookie.GetSuperCookieContents())
+                {
+                    _query.ForAll(j => j.DeleteCookie(c));
+                }
+            }
+            else
+            {
+                _query.ForAll(j => j.DeleteCookie(cookie));
+            }
         }
 
         public void DeleteCookieNamed(string name)
         {
+            var list = _query.Select(j =>j.GetCookieNamed(name)).ToList();
+
             _query.ForAll(j => j.DeleteCookieNamed(name));
+
+            var list2 = _query.Select(j => j.GetCookieNamed(name)).ToList();
         }
 
         public Cookie GetCookieNamed(string name)
         {
-            return new SuperCookie(_query.Select(c => c.GetCookieNamed(name)));
+            return new SuperCookie(_query.Select(c => c.GetCookieNamed(name)).Where(c => c != null));
         }
     }
 }

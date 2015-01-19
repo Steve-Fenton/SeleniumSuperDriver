@@ -33,7 +33,7 @@ namespace Fenton.Selenium.SuperDriver
         ///     });
         /// </code>
         /// </summary>
-        public SuperWebDriver(IList<IWebDriver> drivers)
+        public SuperWebDriver(IEnumerable<IWebDriver> drivers)
         {
             _query = drivers.ToConcurrentQuery();
         }

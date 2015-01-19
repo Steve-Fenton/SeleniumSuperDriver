@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="General\MismatchBetweenBrowsersException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Substitutes\SuperAlert.cs" />
     <Compile Include="Substitutes\SuperCookie.cs" />
     <Compile Include="Substitutes\SuperCookieJar.cs" />
     <Compile Include="General\SuperException.cs" />

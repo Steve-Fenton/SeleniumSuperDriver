@@ -23,3 +23,9 @@ Scenario: Foreward
 	And I navigate back
 	When I navigate forward
 	Then I should be on the Test Navigation page
+
+@SuperDriver @Navigation
+Scenario: Refresh
+	Given I am on the Test Navigation page
+	When I refresh the page
+	Then I should be on the Test Navigation page

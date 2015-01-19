@@ -1,11 +1,12 @@
 ﻿using NUnit.Framework;
+using TechTalk.SpecFlow;
 
 namespace WebApplicationTests.Steps
 {
-    [TestFixture]
+    [Binding]
     public class BaseFixture
     {
-        [TestFixtureTearDown]
+        [AfterTestRun]
         public static void TearDown()
         {
             DriverSingleton.Driver.Close();

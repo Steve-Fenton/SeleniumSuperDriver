@@ -39,6 +39,11 @@ namespace WebApplicationTests
             DriverSingleton.Driver.Navigate().Forward();
         }
 
+        [When(@"I refresh the page")]
+        public void WhenIRefreshThePage()
+        {
+            DriverSingleton.Driver.Navigate().Refresh();
+        }
 
         [Then(@"I should be on the Test Navigation page")]
         public void ThenIShouldBeOnTheTestNavigationPage()

@@ -22,37 +22,37 @@ namespace Fenton.Selenium.SuperDriver
 
         public IAlert Alert()
         {
-            throw new NotImplementedException();
+            return new SuperAlert(_query.Select(l => l.Alert()));
         }
 
         public IWebDriver DefaultContent()
         {
-            return new SuperWebDriver(_query.Select(l => l.DefaultContent()).ToList());
+            return new SuperWebDriver(_query.Select(l => l.DefaultContent()));
         }
 
         public IWebDriver Frame(IWebElement frameElement)
         {
-            return new SuperWebDriver(_query.Select(l => l.Frame(frameElement)).ToList());
+            return new SuperWebDriver(_query.Select(l => l.Frame(frameElement)));
         }
 
         public IWebDriver Frame(string frameName)
         {
-            return new SuperWebDriver(_query.Select(l => l.Frame(frameName)).ToList());
+            return new SuperWebDriver(_query.Select(l => l.Frame(frameName)));
         }
 
         public IWebDriver Frame(int frameIndex)
         {
-            return new SuperWebDriver(_query.Select(l => l.Frame(frameIndex)).ToList());
+            return new SuperWebDriver(_query.Select(l => l.Frame(frameIndex)));
         }
 
         public IWebDriver ParentFrame()
         {
-            return new SuperWebDriver(_query.Select(l => l.ParentFrame()).ToList());
+            return new SuperWebDriver(_query.Select(l => l.ParentFrame()));
         }
 
         public IWebDriver Window(string windowName)
         {
-            return new SuperWebDriver(_query.Select(l => l.Window(windowName)).ToList());
+            return new SuperWebDriver(_query.Select(l => l.Window(windowName)));
         }
     }
 }

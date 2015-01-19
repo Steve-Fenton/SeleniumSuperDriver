@@ -12,9 +12,9 @@ namespace Fenton.Selenium.SuperDriver
             : base(
                 cookies.Select(c => c.Name).AssertAllMatch().First(),
                 cookies.Select(c => c.Value).AssertAllMatch().First(),
-                cookies.Select(c => c.Domain).AssertAllMatch().First(),
-                cookies.Select(c => c.Path).AssertAllMatch().First(),
-                cookies.Select(c => c.Expiry).AssertAllMatch().First())
+                cookies.Select(c => c.Domain).AssertLooseStringMatch().FirstOrDefault(),
+                cookies.Select(c => c.Path).AssertLooseStringMatch().FirstOrDefault(),
+                cookies.Select(c => c.Expiry).AssertLooseDateMatch().FirstOrDefault())
         {
             _query = cookies.ToConcurrentQuery();
         }
@@ -25,6 +25,11 @@ namespace Fenton.Selenium.SuperDriver
             {
                 return _query.Select(c => c.Secure).AssertAllMatch().FirstOrDefault();
             }
+        }
+
+        public IList<Cookie> GetSuperCookieContents()
+        {
+            return _query.ToList();
         }
     }
 }
