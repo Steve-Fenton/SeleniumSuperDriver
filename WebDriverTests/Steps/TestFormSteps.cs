@@ -15,6 +15,8 @@ namespace WebApplicationTests
         }
 
         [Given(@"I am on the Test Form page")]
+        [Given(@"I navigate to the Test Form page")]
+        [When(@"I navigate to the Test Form page")]
         public void GivenIAmOnThe()
         {
             _testContext.CurrentPage = new TestFormPage(DriverSingleton.Driver);

@@ -98,6 +98,9 @@ Software
 
  - Visual Studio 2013 Community Edition (or better)
  - TypeScript 1.4 (used in the sample application)
+
+Software (Only needed to get code coverage if using Visual Studio Community Edition or Pro Edition)
+
  - NUnit (the installed version)
  - OpenCover (the installed version)
 
