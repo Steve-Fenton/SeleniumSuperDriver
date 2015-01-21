@@ -82,6 +82,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Navigation.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Screenshot.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Screenshot.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Window.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +99,7 @@
     <Compile Include="PageObjectModels\TestFormPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringEnumExtensions.cs" />
+    <Compile Include="Steps\ScreenshotSteps.cs" />
     <Compile Include="Steps\WindowSteps.cs" />
     <Compile Include="Steps\NavigationSteps.cs" />
     <Compile Include="Steps\DriverSingleton.cs" />
@@ -124,6 +130,10 @@
     <None Include="Features\Navigation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Navigation.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Screenshot.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Screenshot.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Window.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

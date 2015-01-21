@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Fenton.Selenium.SuperDriver
     /// <summary>
     /// An <see cref="OpenQA.Selenium.IWebDriver"/> that distributes commands to multiple drivers in parallel.
     /// </summary>
-    public class SuperWebDriver : IWebDriver
+    public class SuperWebDriver : IWebDriver, ITakesScreenshot
     {
         private readonly ParallelQuery<IWebDriver> _query;
 
@@ -36,6 +37,11 @@ namespace Fenton.Selenium.SuperDriver
         public SuperWebDriver(IEnumerable<IWebDriver> drivers)
         {
             _query = drivers.ToConcurrentQuery();
+        }
+
+        public int GetBrowserCount()
+        {
+            return _query.Count();
         }
 
         public string CurrentWindowHandle
@@ -135,6 +141,20 @@ namespace Fenton.Selenium.SuperDriver
             {
                 _query.ForAll(d => d.Dispose());
             }
+        }
+
+        public Screenshot GetScreenshot()
+        {
+            ConcurrentBag<Screenshot> screenshots = new ConcurrentBag<Screenshot>();
+            _query.ForAll(d =>
+            {
+                ITakesScreenshot tss = d as ITakesScreenshot;
+                if (tss != null) {
+                    screenshots.Add(tss.GetScreenshot());
+                }
+            });
+
+            return new SuperScreenshot(screenshots);
         }
     }
 }

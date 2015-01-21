@@ -59,8 +59,10 @@
     <Compile Include="Substitutes\SuperNavigation.cs" />
     <Compile Include="Substitutes\SuperOptions.cs" />
     <Compile Include="Substitutes\SuperReadOnlyCollection.cs" />
+    <Compile Include="Substitutes\SuperScreenshot.cs" />
     <Compile Include="Substitutes\SuperTargetLocator.cs" />
     <Compile Include="Substitutes\SuperTimeout.cs" />
+    <Compile Include="SuperUtility.cs" />
     <Compile Include="SuperWebDriver.cs" />
     <Compile Include="Substitutes\SuperWebElement.cs" />
     <Compile Include="Substitutes\SuperWindow.cs" />
