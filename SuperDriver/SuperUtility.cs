@@ -22,8 +22,8 @@ namespace Fenton.Selenium.SuperDriver
             
             var snap = screenshotDriver.GetScreenshot();
             var superSnap = snap as SuperScreenshot;
-            
-            if (snap == null)
+
+            if (superSnap == null)
             {
                 // Normal screenshot
                 snap.SaveAsFile(fileName, imageFormat);
