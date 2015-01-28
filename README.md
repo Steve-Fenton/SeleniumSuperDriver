@@ -20,7 +20,11 @@ IWebDriver driver = new SuperWebDriver(new ChromeDriver(), new FirefoxDriver());
 You are not limited to one of each kind of driver:
 
 ```csharp
-IWebDriver driver = new SuperWebDriver(new ChromeDriver(), new FirefoxDriver(), new FirefoxDriver());
+IWebDriver driver = new SuperWebDriver(
+    new ChromeDriver(),
+    new FirefoxDriver(), 
+    new FirefoxDriver()
+);
 ```
 
 Creating drivers can take some time, so consider creating them in parallel. Simple example:
