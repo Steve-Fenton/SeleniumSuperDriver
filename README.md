@@ -58,6 +58,7 @@ Everything with an interface has a partner Super object:
 | Interface      | Substitute         |
 |----------------|--------------------|
 | IWebDriver     | SuperWebDriver     |
+| IAlert         | SuperAlert         |
 | ICookieJar     | SuperCookieJar     |
 | INavigation    | SuperNavigation    |
 | IOptions       | SuperOptions       |
