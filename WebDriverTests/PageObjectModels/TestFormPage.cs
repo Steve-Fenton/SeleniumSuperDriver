@@ -21,6 +21,9 @@ namespace WebApplicationTests.PageObjectModels
         [FindsBy(How = How.Id, Using = "content")]
         public IWebElement ContentElement { get; set; }
 
+        [FindsBy(How = How.Id, Using = "alerter")]
+        public IWebElement AlertLinkElement { get; set; }
+
         public TestFormPage(IWebDriver driver) : base(driver)
         {
             _testFormUri = new Uri(new Uri(ConfigurationManager.AppSettings["TestUrl"]), "index.html");
@@ -51,6 +54,11 @@ namespace WebApplicationTests.PageObjectModels
         public string Content()
         {
             return ContentElement.Text;
+        }
+
+        internal void TriggerAlert()
+        {
+            AlertLinkElement.Click();
         }
     }
 }

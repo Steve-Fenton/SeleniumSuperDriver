@@ -1,4 +1,5 @@
 ﻿var testForm = document.getElementById('test-form');
+var alertLink = document.getElementById('alerter');
 
 testForm.onsubmit = function (ev: Event) {
     ev.preventDefault();
@@ -10,5 +11,11 @@ testForm.onsubmit = function (ev: Event) {
 
     document.getElementById('content').innerHTML = 'You entered ' + name + ' and ' + email;
 
+    return false;
+};
+
+alertLink.onclick = function (ev: Event) {
+    ev.preventDefault();
+    alert('Test alert message.');
     return false;
 };

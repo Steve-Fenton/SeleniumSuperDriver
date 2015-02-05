@@ -1,5 +1,6 @@
 ﻿using Fenton.Selenium.SuperDriver;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Imaging;
 using System.IO;
 using TechTalk.SpecFlow;
@@ -7,6 +8,7 @@ using TechTalk.SpecFlow;
 namespace WebApplicationTests.Steps
 {
     [Binding]
+    [ExcludeFromCodeCoverage]
     public class BaseFixture
     {
         [AfterScenario]

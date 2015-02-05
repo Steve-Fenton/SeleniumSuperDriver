@@ -67,6 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\Alerts.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Alerts.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Cookie.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,6 +104,7 @@
     <Compile Include="PageObjectModels\TestFormPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringEnumExtensions.cs" />
+    <Compile Include="Steps\AlertSteps.cs" />
     <Compile Include="Steps\ScreenshotSteps.cs" />
     <Compile Include="Steps\WindowSteps.cs" />
     <Compile Include="Steps\NavigationSteps.cs" />
@@ -118,6 +124,10 @@
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Features\Alerts.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Alerts.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Cookie.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
