@@ -109,7 +109,7 @@ The installed version of NUnit and OpenCover seems to work best when using OpenC
 ### Visual Studio Extensions
 
  - SpecFlow
- - NUnit Test Adapted
+ - NUnit Test Adapter
  - OpenCover UI
 
 ### NuGet Packages
