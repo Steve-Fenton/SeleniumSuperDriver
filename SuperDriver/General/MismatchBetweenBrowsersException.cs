@@ -17,7 +17,7 @@ namespace Fenton.Selenium.SuperDriver
         }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public virtual void GetObjectData(SerializationInfo serializationInfo, StreamingContext context)
+        public override void GetObjectData(SerializationInfo serializationInfo, StreamingContext context)
         {
             if (serializationInfo == null)
             {
