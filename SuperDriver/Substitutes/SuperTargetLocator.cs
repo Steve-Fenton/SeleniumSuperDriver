@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,7 +51,22 @@ namespace Fenton.Selenium.SuperDriver
 
         public IWebDriver Window(string windowName)
         {
-            return new SuperWebDriver(_query.Select(l => l.Window(windowName)));
+            var windowNames = windowName.Split('|');
+            var webDrivers = new List<IWebDriver>();
+
+            foreach (var name in windowNames)
+            {
+                foreach (var tl in _query)
+                {
+                    try
+                    {
+                        webDrivers.Add(tl.Window(name));
+                    }
+                    catch (NoSuchWindowException) { };
+                }
+            }
+
+            return new SuperWebDriver(webDrivers);
         }
     }
 }

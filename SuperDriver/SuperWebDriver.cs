@@ -49,8 +49,9 @@ namespace Fenton.Selenium.SuperDriver
             get
             {
                 // Special Note
-                // Primitive type. Send back first one.
-                return _query.First().CurrentWindowHandle;
+                // Primitive type. Send back joined value.
+                var handles = _query.Select(b => b.CurrentWindowHandle).ToList();
+                return String.Join("|", handles);
             }
         }
 
