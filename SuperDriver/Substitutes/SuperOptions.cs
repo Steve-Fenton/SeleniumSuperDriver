@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Fenton.Selenium.SuperDriver
 {
@@ -18,6 +19,14 @@ namespace Fenton.Selenium.SuperDriver
             get
             {
                 return new SuperCookieJar(_query.Select(o => o.Cookies));
+            }
+        }
+
+        public ILogs Logs
+        {
+            get
+            {
+                throw new NotImplementedException();
             }
         }
 

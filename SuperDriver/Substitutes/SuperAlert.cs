@@ -28,6 +28,11 @@ namespace Fenton.Selenium.SuperDriver
             _query.ForAll(a => a.SendKeys(keysToSend));
         }
 
+        public void SetAuthenticationCredentials(string userName, string password)
+        {
+            _query.ForAll(a => a.SetAuthenticationCredentials(userName, password));
+        }
+
         public string Text
         {
             get { return _query.Select(a => a.Text).AssertAllMatch().First(); }
